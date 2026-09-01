@@ -1,0 +1,115 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: 8 11 16;
+  --surface: 15 20 27;
+  --surface2: 21 28 37;
+  --line: 32 42 55;
+  --ink: 226 235 244;
+  --muted: 138 152 170;
+  --faint: 94 107 124;
+  --accent: 56 189 248;
+  --accent2: 129 140 248;
+  --ok: 52 211 153;
+  --warn: 251 191 36;
+  --danger: 251 146 60;
+  --critical: 244 63 94;
+  color-scheme: dark;
+}
+
+[data-theme='light'] {
+  --bg: 244 246 250;
+  --surface: 255 255 255;
+  --surface2: 248 250 252;
+  --line: 223 229 237;
+  --ink: 16 24 36;
+  --muted: 91 104 122;
+  --faint: 133 145 162;
+  --accent: 2 132 199;
+  --accent2: 79 70 229;
+  --ok: 5 150 105;
+  --warn: 217 119 6;
+  --danger: 234 88 12;
+  --critical: 225 29 72;
+  color-scheme: light;
+}
+
+* { border-color: rgb(var(--line)); }
+
+html, body, #root { height: 100%; }
+
+body {
+  @apply bg-bg text-ink font-sans antialiased;
+  font-feature-settings: 'cv02','cv03','cv04','ss01';
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgb(var(--line)); border-radius: 8px; border: 2px solid rgb(var(--bg)); }
+::-webkit-scrollbar-thumb:hover { background: rgb(var(--faint) / .6); }
+
+@layer components {
+  .card { @apply bg-surface border border-line rounded-xl shadow-card; }
+  .panel { @apply bg-surface border border-line rounded-xl; }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg text-sm font-semibold
+           transition-all duration-150 select-none whitespace-nowrap
+           disabled:opacity-45 disabled:pointer-events-none
+           focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-bg;
+  }
+  .btn-md { @apply h-9 px-3.5; }
+  .btn-sm { @apply h-8 px-3 text-[13px]; }
+  .btn-xs { @apply h-7 px-2.5 text-xs; }
+  .btn-lg { @apply h-11 px-5 text-[15px]; }
+  .btn-icon { @apply h-9 w-9 px-0; }
+
+  .btn-primary { @apply bg-accent text-bg hover:brightness-110 active:brightness-95 shadow-[0_1px_0_rgb(255_255_255/.15)_inset]; }
+  .btn-secondary { @apply bg-surface2 text-ink border border-line hover:border-faint/60 hover:bg-line/40; }
+  .btn-ghost { @apply text-muted hover:text-ink hover:bg-surface2; }
+  .btn-danger { @apply bg-critical text-white hover:brightness-110; }
+  .btn-outline { @apply border border-line text-ink hover:bg-surface2; }
+
+  .input {
+    @apply w-full h-9 rounded-lg bg-surface2 border border-line px-3 text-sm text-ink
+           placeholder:text-faint transition
+           focus:outline-none focus:border-accent/70 focus:ring-2 focus:ring-accent/20;
+  }
+  .textarea { @apply input h-auto py-2 leading-relaxed resize-y; }
+  .select { @apply input pr-8 appearance-none cursor-pointer; }
+  .label { @apply block text-[12px] font-semibold text-muted mb-1.5 tracking-wide; }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-[11px] font-semibold
+           leading-5 whitespace-nowrap;
+  }
+
+  .th { @apply text-left text-[11px] font-bold uppercase tracking-[.08em] text-faint px-3 py-2.5 select-none; }
+  .td { @apply px-3 py-3 text-sm align-middle; }
+  .row { @apply border-t border-line/70 hover:bg-surface2/60 transition-colors; }
+
+  .navlink {
+    @apply flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-[13.5px] font-medium text-muted
+           hover:text-ink hover:bg-surface2 transition-colors relative;
+  }
+  .navlink-active { @apply text-ink bg-surface2; }
+
+  .skel { @apply relative overflow-hidden bg-surface2 rounded; }
+  .skel::after {
+    content: ''; @apply absolute inset-0 -translate-x-full animate-shimmer;
+    background-image: linear-gradient(90deg, transparent, rgb(var(--ink) / .06), transparent);
+  }
+  .mono { @apply font-mono tabular-nums; }
+  .kbd { @apply inline-flex h-5 min-w-[20px] items-center justify-center rounded border border-line bg-surface2 px-1.5 font-mono text-[10px] font-semibold text-muted; }
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(rgb(var(--line) / .5) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--line) / .5) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+.recharts-cartesian-axis-tick text { fill: rgb(var(--faint)); font-size: 11px; }
+.recharts-default-tooltip { border-radius: 10px !important; }

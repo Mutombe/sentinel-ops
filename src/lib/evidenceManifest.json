@@ -1,0 +1,108 @@
+{
+  "inc-9001": [
+    {
+      "name": "photo-01.jpeg",
+      "sizeKb": 126
+    },
+    {
+      "name": "photo-02.jpeg",
+      "sizeKb": 120
+    },
+    {
+      "name": "photo-03.jpeg",
+      "sizeKb": 101
+    },
+    {
+      "name": "photo-04.jpeg",
+      "sizeKb": 85
+    },
+    {
+      "name": "photo-05.jpeg",
+      "sizeKb": 68
+    },
+    {
+      "name": "photo-06.jpeg",
+      "sizeKb": 93
+    },
+    {
+      "name": "photo-07.jpeg",
+      "sizeKb": 82
+    },
+    {
+      "name": "photo-08.jpeg",
+      "sizeKb": 96
+    },
+    {
+      "name": "photo-09.jpeg",
+      "sizeKb": 101
+    }
+  ],
+  "inc-9002": [
+    {
+      "name": "photo-01.jpeg",
+      "sizeKb": 66
+    },
+    {
+      "name": "photo-02.jpeg",
+      "sizeKb": 46
+    },
+    {
+      "name": "photo-03.jpeg",
+      "sizeKb": 57
+    },
+    {
+      "name": "photo-04.jpeg",
+      "sizeKb": 41
+    },
+    {
+      "name": "photo-05.jpeg",
+      "sizeKb": 58
+    },
+    {
+      "name": "photo-06.jpeg",
+      "sizeKb": 58
+    },
+    {
+      "name": "photo-07.jpeg",
+      "sizeKb": 21
+    },
+    {
+      "name": "photo-08.jpeg",
+      "sizeKb": 64
+    },
+    {
+      "name": "photo-09.jpeg",
+      "sizeKb": 51
+    }
+  ],
+  "inc-9003": [
+    {
+      "name": "photo-01.jpeg",
+      "sizeKb": 63
+    },
+    {
+      "name": "photo-02.jpeg",
+      "sizeKb": 68
+    },
+    {
+      "name": "photo-03.jpeg",
+      "sizeKb": 80
+    },
+    {
+      "name": "photo-04.jpeg",
+      "sizeKb": 91
+    },
+    {
+      "name": "photo-05.jpeg",
+      "sizeKb": 74
+    },
+    {
+      "name": "photo-06.jpeg",
+      "sizeKb": 79
+    },
+    {
+      "name": "photo-07.jpeg",
+      "sizeKb": 73
+    }
+  ]
+}
