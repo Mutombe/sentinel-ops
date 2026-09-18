@@ -114,22 +114,22 @@ export default function Dashboard() {
           <p className="text-[12.5px] font-medium text-ink">Needs attention</p>
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[12.5px] text-muted">
             {k.criticalOpen > 0 && (
-              <Link to="/incidents" className="hover:text-ink hover:underline">
+              <Link to="/incidents" className="inline-flex min-h-[32px] items-center hover:text-ink hover:underline sm:min-h-0">
                 <span className="mono font-bold text-critical">{k.criticalOpen}</span> critical incident{k.criticalOpen > 1 ? 's' : ''} open
               </Link>
             )}
             {k.licenceExpired > 0 && (
-              <Link to="/guards" className="hover:text-ink hover:underline">
+              <Link to="/guards" className="inline-flex min-h-[32px] items-center hover:text-ink hover:underline sm:min-h-0">
                 <span className="mono font-bold text-critical">{k.licenceExpired}</span> expired registration{k.licenceExpired > 1 ? 's' : ''}
               </Link>
             )}
             {k.licenceExpiring > 0 && (
-              <Link to="/guards" className="hover:text-ink hover:underline">
+              <Link to="/guards" className="inline-flex min-h-[32px] items-center hover:text-ink hover:underline sm:min-h-0">
                 <span className="mono font-bold text-warn">{k.licenceExpiring}</span> licence{k.licenceExpiring > 1 ? 's' : ''} expiring in 30d
               </Link>
             )}
             {k.lateArrivals > 0 && (
-              <Link to="/attendance" className="hover:text-ink hover:underline">
+              <Link to="/attendance" className="inline-flex min-h-[32px] items-center hover:text-ink hover:underline sm:min-h-0">
                 <span className="mono font-bold text-warn">{k.lateArrivals}</span> late arrivals this week
               </Link>
             )}
@@ -257,7 +257,7 @@ export default function Dashboard() {
         <Card
           title="Live duty board"
           subtitle="Officers currently signed on"
-          actions={<Link to="/shifts" className="text-[12px] font-semibold text-accent hover:underline">Full roster</Link>}
+          actions={<Link to="/shifts" className="link-action">Full roster</Link>}
           noPad
         >
           {isLoading ? (
@@ -291,7 +291,7 @@ export default function Dashboard() {
         <Card
           title="Hot sites"
           subtitle="Most incidents in the last 90 days"
-          actions={<Link to="/sites" className="text-[12px] font-semibold text-accent hover:underline">All sites</Link>}
+          actions={<Link to="/sites" className="link-action">All sites</Link>}
           noPad
         >
           {isLoading ? (
@@ -323,7 +323,7 @@ export default function Dashboard() {
         <Card
           title="Coverage gaps today"
           subtitle="Sites with nobody on the roster"
-          actions={<Link to="/shifts" className="text-[12px] font-semibold text-accent hover:underline">Roster</Link>}
+          actions={<Link to="/shifts" className="link-action">Roster</Link>}
           noPad
         >
           {isLoading ? (
@@ -403,7 +403,7 @@ export default function Dashboard() {
           className={isGuard ? 'xl:col-span-3' : ''}
           title="Latest incidents"
           subtitle="Newest first"
-          actions={<Link to="/incidents" className="text-[12px] font-semibold text-accent hover:underline">View all</Link>}
+          actions={<Link to="/incidents" className="link-action">View all</Link>}
           noPad
         >
           {isLoading ? (

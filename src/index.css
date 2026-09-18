@@ -60,11 +60,20 @@ body {
            disabled:opacity-45 disabled:pointer-events-none
            focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/60 focus-visible:ring-offset-2 focus-visible:ring-offset-bg;
   }
-  .btn-md { @apply h-9 px-3.5; }
-  .btn-sm { @apply h-8 px-3 text-[13px]; }
-  .btn-xs { @apply h-7 px-2.5 text-xs; }
+  /* A thumb needs more than a cursor does, so the compact sizes only get
+     compact once there is a pointer to match. */
+  .btn-md { @apply h-10 px-3.5 sm:h-9; }
+  .btn-sm { @apply h-9 px-3 text-[13px] sm:h-8; }
+  .btn-xs { @apply h-8 px-2.5 text-xs sm:h-7; }
   .btn-lg { @apply h-11 px-5 text-[15px]; }
-  .btn-icon { @apply h-9 w-9 px-0; }
+
+  /* A card's "view all" style action. It is a text link on a desktop and a
+     proper tap target on a phone, without changing how it reads. */
+  .link-action {
+    @apply inline-flex items-center gap-1 min-h-[36px] text-[12px] font-semibold
+           text-accent hover:underline sm:min-h-0;
+  }
+  .btn-icon { @apply h-10 w-10 px-0 sm:h-9 sm:w-9; }
 
   .btn-primary { @apply bg-accent text-bg hover:brightness-110 active:brightness-95 shadow-[0_1px_0_rgb(255_255_255/.15)_inset]; }
   .btn-secondary { @apply bg-surface2 text-ink border border-line hover:border-faint/60 hover:bg-line/40; }

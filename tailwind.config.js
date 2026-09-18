@@ -7,6 +7,15 @@ const safelist = TONES.flatMap((c) => [
   `text-${c}/70`, `ring-${c}/30`, `shadow-${c}/20`,
 ])
 
+/* The Button component builds its classes as `btn-${variant}` and `btn-${size}`,
+   which the content scanner cannot see, so every one of them has to be listed
+   here or the buttons render with no background and no height. */
+const BUTTONS = [
+  'btn', 'btn-primary', 'btn-secondary', 'btn-ghost', 'btn-danger', 'btn-outline',
+  'btn-xs', 'btn-sm', 'btn-md', 'btn-lg', 'btn-icon',
+]
+safelist.push(...BUTTONS)
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],

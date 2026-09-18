@@ -79,7 +79,7 @@ export default function PortalOverview() {
           className="xl:col-span-2"
           title="Recent incident reports"
           subtitle="Published to your portal"
-          actions={<Link to="/portal/incidents" className="text-[12px] font-semibold text-accent hover:underline">View all</Link>}
+          actions={<Link to="/portal/incidents" className="link-action">View all</Link>}
           noPad
         >
           {isLoading ? (
@@ -108,7 +108,7 @@ export default function PortalOverview() {
         <div className="space-y-4">
           <Card
             title="Your service requests"
-            actions={<Link to="/portal/requests" className="text-[12px] font-semibold text-accent hover:underline">Manage</Link>}
+            actions={<Link to="/portal/requests" className="link-action">Manage</Link>}
             noPad
           >
             {reqQ.isLoading ? (
@@ -132,7 +132,7 @@ export default function PortalOverview() {
 
           <Card
             title="Latest inspections"
-            actions={<Link to="/portal/inspections" className="text-[12px] font-semibold text-accent hover:underline">All reports</Link>}
+            actions={<Link to="/portal/inspections" className="link-action">All reports</Link>}
             noPad
           >
             {inspQ.isLoading ? (

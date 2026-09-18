@@ -192,7 +192,7 @@ export default function Users() {
           <Select
             value={r.role}
             onChange={(e) => update.mutate({ id: r.id, patch: { role: e.target.value } })}
-            className="h-7 text-[12px]"
+            className="h-9 text-[12px] sm:h-7"
           >
             {ROLES.map((x) => <option key={x} value={x}>{ROLE_LABEL[x]}</option>)}
           </Select>
@@ -220,9 +220,9 @@ export default function Users() {
       render: (r) => (
         <div className="flex items-center justify-end gap-0.5" onClick={(e) => e.stopPropagation()}>
           {r.id !== me.id && <ViewAsButton userId={r.id} label="View as" size="xs" variant="ghost" />}
-          {can('users', 'update') && <button className="btn btn-ghost h-7 w-7 px-0" onClick={() => { setEditing(r); setFormOpen(true) }}><Pencil size={13} /></button>}
+          {can('users', 'update') && <button className="btn btn-ghost h-9 w-9 px-0 sm:h-7 sm:w-7" onClick={() => { setEditing(r); setFormOpen(true) }}><Pencil size={13} /></button>}
           {can('users', 'delete') && r.id !== me.id && (
-            <button className="btn btn-ghost h-7 w-7 px-0 text-critical" onClick={() => setConfirm(r)}><Trash2 size={13} /></button>
+            <button className="btn btn-ghost h-9 w-9 px-0 text-critical sm:h-7 sm:w-7" onClick={() => setConfirm(r)}><Trash2 size={13} /></button>
           )}
         </div>
       ),

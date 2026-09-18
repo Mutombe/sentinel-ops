@@ -223,7 +223,7 @@ export default function OfficerDuty() {
             <div key={i} className={cn('flex items-start gap-2.5 rounded-xl border px-4 py-2.5', `border-${c.tone}/25 bg-${c.tone}/[.07]`)}>
               <c.icon size={15} className={cn('mt-0.5 shrink-0', `text-${c.tone}`)} />
               <p className="flex-1 text-[12.5px] text-ink">{c.text}</p>
-              <Link to="/me/record" className="shrink-0 text-[12px] font-semibold text-accent hover:underline">My file</Link>
+              <Link to="/me/record" className="shrink-0 link-action">My file</Link>
             </div>
           ))}
         </div>
@@ -352,7 +352,7 @@ export default function OfficerDuty() {
         className="mt-4"
         title="My incident reports"
         subtitle="Reports you filed or were assigned"
-        actions={<Link to="/me/incidents" className="text-[12px] font-semibold text-accent hover:underline">View all</Link>}
+        actions={<Link to="/me/incidents" className="link-action">View all</Link>}
         noPad
       >
         {data.myIncidents.length === 0 ? (

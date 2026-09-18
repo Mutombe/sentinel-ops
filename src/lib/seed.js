@@ -46,7 +46,16 @@ const REQ_TYPES = ['Additional Coverage','Incident Follow-up','Site Assessment',
 const STREETS = ['Samora Machel','Julius Nyerere','Leopold Takawira','Herbert Chitepo','Jason Moyo','George Silundika','Kwame Nkrumah','Nelson Mandela','Borrowdale','Enterprise','Chiremba','Josiah Tongogara','Second Street','Angwa Street','Baker Avenue','Fife Avenue']
 
 const DAY = 86400000
-export const NOW = new Date('2026-08-27T09:12:00Z').getTime()
+
+/* The whole dataset is laid out relative to NOW: the roster runs three weeks
+   back and two forward, attendance fills the recent past, invoices age into
+   their due dates. Pinning NOW to a fixed calendar date meant the demo aged,
+   until "this week" on the roster fell off the end of the data and the app
+   looked broken. It now tracks the current day, with the time of day held
+   constant so a reseed on the same day still produces the same dataset. */
+const seedAnchor = new Date()
+seedAnchor.setUTCHours(9, 12, 0, 0)
+export const NOW = seedAnchor.getTime()
 const iso = (t) => new Date(t).toISOString()
 const pad = (n, w = 4) => String(n).padStart(w, '0')
 const slugPart = (s) => s.toLowerCase().replace(/[^a-z]/g, '')

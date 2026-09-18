@@ -139,7 +139,7 @@ function WeekBoard({ weekStart, rows, loading, onAdd, onEdit }) {
   const todayKey = new Date().toISOString().slice(0, 10)
 
   return (
-    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
+    <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-7">
       {days.map((d) => {
         const key = d.toISOString().slice(0, 10)
         const list = byDay[key] || []
@@ -155,7 +155,7 @@ function WeekBoard({ weekStart, rows, loading, onAdd, onEdit }) {
               </div>
               <div className="flex items-center gap-1">
                 <span className="mono rounded bg-surface2 px-1.5 py-0.5 text-[10.5px] font-bold text-muted">{list.length}</span>
-                <button onClick={() => onAdd(key)} className="btn btn-ghost h-6 w-6 px-0" title="Add shift"><Plus size={12} /></button>
+                <button onClick={() => onAdd(key)} className="btn btn-ghost h-9 w-9 px-0 sm:h-6 sm:w-6" title="Add shift"><Plus size={12} /></button>
               </div>
             </div>
             <div className="min-h-[120px] flex-1 space-y-1.5 p-2">

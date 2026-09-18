@@ -180,8 +180,11 @@ export function Segmented({ value, onChange, options, size = 'md', className }) 
             type="button"
             onClick={() => onChange(v)}
             className={cn(
-              'rounded-[6px] font-semibold transition-colors',
-              size === 'sm' ? 'px-2.5 py-1 text-[11.5px]' : 'px-3 py-1.5 text-[12.5px]',
+              'inline-flex items-center justify-center rounded-[6px] font-semibold transition-colors',
+              // roomy enough for a thumb on a phone, compact once there is a cursor
+              size === 'sm'
+                ? 'min-h-[32px] px-2.5 py-1 text-[11.5px] sm:min-h-0'
+                : 'min-h-[34px] px-3 py-1.5 text-[12.5px] sm:min-h-0',
               active ? 'bg-surface text-ink shadow-sm' : 'text-muted hover:text-ink'
             )}
           >

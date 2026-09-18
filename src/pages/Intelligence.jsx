@@ -91,7 +91,7 @@ function SignalCard({ s }) {
 
           <div className="mt-3 flex items-center justify-between">
             <span className="truncate text-[11.5px] text-faint">{s.entity.name}</span>
-            <Link to={s.link} className="inline-flex items-center gap-1 text-[12px] font-semibold text-accent hover:underline">
+            <Link to={s.link} className="link-action">
               Open <ArrowRight size={12} />
             </Link>
           </div>

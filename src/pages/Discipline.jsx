@@ -290,7 +290,7 @@ export default function Discipline() {
           <Card
             title="Recent commendations"
             subtitle="The other half of the record"
-            actions={<button onClick={() => setTab('commendations')} className="text-[12px] font-semibold text-accent hover:underline">See all</button>}
+            actions={<button onClick={() => setTab('commendations')} className="link-action">See all</button>}
             noPad
           >
             {commendations.length === 0 ? (

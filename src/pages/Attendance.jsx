@@ -18,7 +18,7 @@ export default function Attendance() {
   const { can, isGuard } = useAuth()
   const navigate = useNavigate()
   const t = useTableState({ sort: 'date', dir: 'desc' })
-  const [range, setRange] = useState('7')
+  const [range, setRange] = useState('30')
   const [selected, setSelected] = useState([])
 
   const from = useMemo(() => new Date(Date.now() - +range * 86400000).toISOString().slice(0, 10), [range])

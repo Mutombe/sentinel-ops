@@ -1,14 +1,14 @@
 import { buildSeed } from './seed'
 import { idb } from './idb'
 
-const KEY = 'sentinelops.db.v9'
+const KEY = 'sentinelops.db.v10'
 const SETTINGS_KEY = 'sentinelops.settings.v1'
 
 /* Legacy localStorage payloads from before the IndexedDB move. They are what
    pushed the origin over its ~5 MB quota, so clear them out on boot. */
 const LEGACY_KEYS = [
   'sentinelops.db.v1', 'sentinelops.db.v2', 'sentinelops.db.v3',
-  'sentinelops.db.v4', 'sentinelops.db.v5', 'sentinelops.db.v6', 'sentinelops.db.v7', 'sentinelops.db.v8', 'sentinelops.db.v9',
+  'sentinelops.db.v4', 'sentinelops.db.v5', 'sentinelops.db.v6', 'sentinelops.db.v7', 'sentinelops.db.v8', 'sentinelops.db.v9', 'sentinelops.db.v10',
 ]
 
 export const DEFAULT_SETTINGS = {
@@ -52,7 +52,18 @@ export async function initStore() {
   persistent = await idb.available()
   let saved = persistent ? await idb.get(KEY) : null
 
-  if (!saved || !saved.clients || !saved.inspections) {
+  /* A dataset laid out around the day it was generated goes stale: after a
+     week the roster's current view sits past the end of the data. Rebuild it
+     rather than show an empty week. */
+  const STALE_DAYS = 5
+  const seededAt = saved?.__seededAt ? Date.parse(saved.__seededAt) : 0
+  const stale = seededAt > 0 && (Date.now() - seededAt) > STALE_DAYS * 86400000
+
+  if (stale) {
+    console.info('[db] dataset is older than %d days, regenerating against today', STALE_DAYS)
+  }
+
+  if (stale || !saved || !saved.clients || !saved.inspections) {
     saved = buildSeed()
     saved.__seededAt = new Date().toISOString()
     db = saved

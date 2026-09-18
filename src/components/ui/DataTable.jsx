@@ -29,7 +29,7 @@ export function Pagination({ page, pageCount, pageSize, total, from, to, onPage,
           <select
             value={pageSize}
             onChange={(e) => onPageSize(+e.target.value)}
-            className="h-7 rounded-md border border-line bg-surface2 px-1.5 text-[11.5px] text-muted outline-none focus:border-accent/60"
+            className="h-9 rounded-md border border-line bg-surface2 px-1.5 text-[11.5px] text-muted outline-none focus:border-accent/60 sm:h-7"
             aria-label="Rows per page"
           >
             {[10, 25, 50, 100].map((n) => <option key={n} value={n}>{n} / page</option>)}
@@ -38,10 +38,10 @@ export function Pagination({ page, pageCount, pageSize, total, from, to, onPage,
       </div>
 
       <div className="flex items-center gap-1">
-        <button className="btn btn-ghost h-7 w-7 px-0" disabled={page <= 1} onClick={() => onPage(1)} aria-label="First page">
+        <button className="btn btn-ghost h-9 w-9 px-0 sm:h-7 sm:w-7" disabled={page <= 1} onClick={() => onPage(1)} aria-label="First page">
           <ChevronsLeft size={14} />
         </button>
-        <button className="btn btn-ghost h-7 w-7 px-0" disabled={page <= 1} onClick={() => onPage(page - 1)} aria-label="Previous page">
+        <button className="btn btn-ghost h-9 w-9 px-0 sm:h-7 sm:w-7" disabled={page <= 1} onClick={() => onPage(page - 1)} aria-label="Previous page">
           <ChevronLeft size={14} />
         </button>
         {pages.map((p, i) =>
@@ -52,7 +52,7 @@ export function Pagination({ page, pageCount, pageSize, total, from, to, onPage,
               key={p}
               onClick={() => onPage(p)}
               className={cn(
-                'mono h-7 min-w-[28px] rounded-md px-1.5 text-[12px] font-semibold transition',
+                'mono h-9 min-w-[36px] rounded-md px-1.5 text-[12px] font-semibold transition sm:h-7 sm:min-w-[28px]',
                 p === page ? 'bg-accent text-bg' : 'text-muted hover:bg-surface2 hover:text-ink'
               )}
             >
@@ -60,10 +60,10 @@ export function Pagination({ page, pageCount, pageSize, total, from, to, onPage,
             </button>
           )
         )}
-        <button className="btn btn-ghost h-7 w-7 px-0" disabled={page >= pageCount} onClick={() => onPage(page + 1)} aria-label="Next page">
+        <button className="btn btn-ghost h-9 w-9 px-0 sm:h-7 sm:w-7" disabled={page >= pageCount} onClick={() => onPage(page + 1)} aria-label="Next page">
           <ChevronRight size={14} />
         </button>
-        <button className="btn btn-ghost h-7 w-7 px-0" disabled={page >= pageCount} onClick={() => onPage(pageCount)} aria-label="Last page">
+        <button className="btn btn-ghost h-9 w-9 px-0 sm:h-7 sm:w-7" disabled={page >= pageCount} onClick={() => onPage(pageCount)} aria-label="Last page">
           <ChevronsRight size={14} />
         </button>
       </div>
@@ -97,6 +97,94 @@ function hideClass(col) {
     || (SECONDARY.lg.includes(col.key) && 'lg')
     || (SECONDARY.md.includes(col.key) && 'md')
   return HIDE_CLASS[at] || ''
+}
+
+/* On a phone a nine column table is not a table, it is nine stubs of truncated
+   text. Below the sm breakpoint every list renders as stacked cards instead:
+   the identity column becomes the card heading, the columns that the table
+   would have dropped come back as labelled facts, and the row actions sit at
+   the foot at a size a thumb can actually hit.
+
+   Columns opt in explicitly with card: 'title' | 'actions' | false, but the
+   defaults below mean no page has to say anything: the first column is the
+   heading and a trailing column with no header is the action cluster. */
+function cardRoles(columns) {
+  let title = columns.find((c) => c.card === 'title')
+  let actions = columns.find((c) => c.card === 'actions') || columns.find((c) => c.key === 'actions')
+  const last = columns[columns.length - 1]
+  if (!actions && last && !last.header && last.sortable === false) actions = last
+  if (!title) title = columns.find((c) => c !== actions && c.card !== false)
+  /* A card is a summary, not the record. The incidental columns the widest
+     table already sheds stay shed here, and five facts is as far as anyone
+     scans before tapping through to the detail page. */
+  const facts = columns
+    .filter((c) => c !== title && c !== actions && c.card !== false)
+    .filter((c) => c.card === 'fact' || !(c.hide === 'xl' || SECONDARY.xl.includes(c.key)))
+    .slice(0, 5)
+  return { title, actions, facts }
+}
+
+function RowCard({ row, columns, rowKey, selectable, isSel, onSelect, onRowClick }) {
+  const { title, actions, facts } = React.useMemo(() => cardRoles(columns), [columns])
+  const clickable = !!onRowClick
+  return (
+    <div
+      data-row-card
+      onClick={clickable ? () => onRowClick(row) : undefined}
+      className={cn(
+        'relative border-b border-line/60 px-3.5 py-3 transition last:border-b-0',
+        clickable && 'cursor-pointer active:bg-surface2/70',
+        isSel && 'bg-accent/[.06]',
+        row.__optimistic && 'opacity-60',
+        row.__deleting && 'opacity-35 line-through'
+      )}
+    >
+      <div className="flex items-start gap-2.5">
+        {selectable && (
+          <span className="pt-0.5" onClick={(e) => e.stopPropagation()}>
+            <Checkbox checked={isSel} onChange={onSelect} />
+          </span>
+        )}
+        <div className="min-w-0 flex-1">
+          {title && (
+            <div className="min-w-0 text-[13px] font-semibold text-ink">
+              {title.render ? title.render(row) : (row[title.key] ?? 'Unspecified')}
+            </div>
+          )}
+
+          {facts.length > 0 && (
+            <dl className="mt-2 grid grid-cols-2 gap-x-3 gap-y-1.5">
+              {facts.map((c) => {
+                const value = c.render ? c.render(row) : (row[c.key] ?? 'Unspecified')
+                return (
+                  <div key={c.key} className="min-w-0">
+                    <dt className="truncate text-[10px] uppercase tracking-wide text-faint">{c.header}</dt>
+                    <dd className="mt-0.5 min-w-0 truncate text-[12.5px] text-muted">{value}</dd>
+                  </div>
+                )
+              })}
+            </dl>
+          )}
+        </div>
+
+        {clickable && <ChevronRight size={14} className="mt-1 shrink-0 text-faint" />}
+      </div>
+
+      {actions && (
+        <div
+          className={cn(
+            'mt-2.5 flex flex-wrap items-center gap-1.5 border-t border-line/50 pt-2.5',
+            // the table aligns row actions right; on a card they read better from the left
+            '[&>div]:w-full [&>div]:justify-start [&>div]:gap-1.5',
+            '[&_button]:h-9 [&_button]:min-w-[36px] [&_button]:px-2.5'
+          )}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {actions.render ? actions.render(row) : null}
+        </div>
+      )}
+    </div>
+  )
 }
 
 export function DataTable({
@@ -160,7 +248,38 @@ export function DataTable({
         </div>
       )}
 
-      <div className="overflow-x-auto">
+      {/* Phones: stacked cards. */}
+      <div className="sm:hidden" data-card-list>
+        {loading ? (
+          <div className="space-y-2 p-3.5">
+            {Array.from({ length: pageSize ? Math.min(pageSize, 6) : 6 }).map((_, i) => (
+              <div key={i} className="skel h-20 rounded-lg" />
+            ))}
+          </div>
+        ) : rows.length === 0 ? (
+          <EmptyState icon={emptyIcon} title={emptyTitle} body={emptyBody} action={emptyAction} />
+        ) : (
+          rows.map((r) => {
+            const id = r[rowKey]
+            const isSel = selected.includes(id)
+            return (
+              <RowCard
+                key={id}
+                row={r}
+                columns={columns}
+                rowKey={rowKey}
+                selectable={selectable}
+                isSel={isSel}
+                onSelect={() => onSelected(isSel ? selected.filter((x) => x !== id) : [...selected, id])}
+                onRowClick={onRowClick}
+              />
+            )
+          })
+        )}
+      </div>
+
+      {/* Tablet and up: the table. */}
+      <div className="hidden overflow-x-auto sm:block">
         <table className="w-full table-fixed border-collapse">
           <thead className="sticky top-0 z-10 bg-surface2/80 backdrop-blur">
             <tr>
