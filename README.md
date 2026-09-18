@@ -6,6 +6,8 @@ equipment, contract billing, analytics, role based access, a **client portal**, 
 portal**, and a rules based **Operations Intelligence** layer. It runs entirely in the
 browser against a mock API that behaves like a real one.
 
+**Live: https://sentinel-ops-q434.onrender.com**
+
 ```bash
 npm install
 npm run dev      # http://localhost:5173
